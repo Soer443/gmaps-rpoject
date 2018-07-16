@@ -1,0 +1,10 @@
+{
+  "name": "js-xkhgxs",
+  "description": "",
+  "homepage": "https://stackblitz.com/edit/js-xkhgxs",
+  "dependencies": {
+    "lodash": "4.17.10",
+    "google-maps": "3.3.0"
+  },
+  "version": "1.0.0"
+}
