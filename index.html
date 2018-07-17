@@ -1,8 +1,28 @@
 <html>
 <head>
-  <title>js-xkhgxs</title>  
+    <title>js-xkhgxs</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
+          integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
+            integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
+            crossorigin=""></script>
+    <script type="text/javascript" src="./node_modules/leaflet-draw/dist/leaflet.draw.js"></script>
+    <link rel="stylesheet" href="./node_modules/leaflet-draw/dist/leaflet.draw.css"/>
+
+    <style>
+        #mapid {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
 </head>
 <body>
-<iframe class="gmap" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d19637.193647007625!2d76.91438173955079!3d52.031488!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x42f829141e099369%3A0x17bd67c67c2fa337!2z0J7RgdGC0LDQvdC-0LLQutCw!5e0!3m2!1sru!2skz!4v1531754335994" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+    <div id="mapid"></div>
+    <script type="text/javascript" src="index.js?51"></script>
 </body>
 </html>
