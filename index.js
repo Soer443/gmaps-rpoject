@@ -1,5 +1,6 @@
-
-var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+var selected = [];
+var dPoly = [];
+var mymap = L.map('mapid', {editable:true}).setView([51.505, -0.09], 13);
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -21,33 +22,50 @@ mymap.addControl(drawControl);
 mymap.on('draw:created', function (e) {
     var type = e.layerType,
         layer = e.layer;
-
+    console.log(e.layer.getLatLngs());
+    dPoly = e.layer;
     if (type === 'marker') {
-
     }
-
-
     drawnItems.addLayer(layer);
 });
 
-mymap.on('draw:edited', function () {
-
+mymap.on('draw:edited', function(e) {
+    layers = e.layers;
+    layers.eachLayer(function(layer){
+        console.log(layer.getLatLngs())
+    });
 });
 
 mymap.on('draw:deleted', function () {
-
 });
 
-var polygon = L.polygon([
-    [51.501, -0.015],
-    [51.501, -0.065],
-    [51.508, -0.04],
-    // [51.503, -0.47]
-]).addTo(mymap);
+function showFunc() {
+    document.getElementById('dPoly').innerHTML = dPoly.getLatLngs();
+}
+
+function saveFunc() {}
 
 var latlngs = [
     [51.501, -0.06],
     [51.490, -0.06],
     [51.490, -0.02],
     [51.501, -0.02]];
-var polygon = L.polygon(latlngs, {color: 'purple'}).addTo(mymap);
+var polygon1 = L.polygon(latlngs, {color: '#3388FF'}).addTo(mymap);
+polygon1.enableEdit();
+
+var latlngs2 = [
+    [-22.570922, 17.058442],
+    [-22.571794, 17.059579],
+    [-22.572547, 17.062368],
+    [-22.57223, 17.06445],
+    [-22.569456, 17.064428],
+];
+var polygon2 = L.polygon(latlngs2, {color: '#3388FF'}).addTo(mymap);
+polygon2.enableEdit();
+
+function goToPointOne() {
+    mymap.flyToBounds(polygon1);
+}
+function goToPointTwo() {
+    mymap.flyToBounds(polygon2);
+}
