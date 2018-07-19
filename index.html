@@ -43,8 +43,15 @@
             height: 36%;
             overflow-scrolling: auto;
         }
+        #showButton {
+            display: flex;
+        }
         #show {
-            width: 100%;
+            width: 50%;
+            height: 30px;
+        }
+        #removePolygon {
+            width: 50%;
             height: 30px;
         }
         li {
@@ -93,9 +100,10 @@
             <textarea id="dPoly"></textarea>
         </div>
         <div id="showButton">
-            <button id="show" onclick="showFunc(dPoly)">show</button>
+            <button id="show" onclick="showFunc(polygons)">show</button>
+            <button id="removePolygon" onclick="removePolygon()">Remove</button>
         </div>
     </div>
-    <script type="text/javascript" src="index.js?272"></script>
+    <script type="text/javascript" src="index.js?330"></script>
 </body>
 </html>

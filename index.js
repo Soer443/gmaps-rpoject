@@ -1,5 +1,6 @@
 var selected = '';
 var mymap = L.map('mapid', {editable:true}).setView([51.505, -0.09], 13);
+var polygons = [];
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -10,6 +11,13 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 
 var options = {
     position: 'bottomright',
+    draw: {
+        circle: false, // Turns off this drawing tool
+        marker: false, // Turns off this drawing tool
+        circlemarker: false, // Turns off this drawing tool
+        polyline: false, // Turns off this drawing tool
+        rectangle: false, // Turns off this drawing tool
+    }
 };
 
 var drawnItems = new L.FeatureGroup();
@@ -27,7 +35,6 @@ mymap.on('draw:created', function (e) {
     var type = e.layerType,
         layer = e.layer;
     console.log(e.layer.getLatLngs());
-    dPoly = e.layer;
     if (type === 'marker') {
     }
     drawnItems.addLayer(layer);
@@ -43,22 +50,7 @@ mymap.on('draw:edited', function(e) {
 mymap.on('draw:deleted', function () {
 });
 
-//
-// var latlngs = [
-//     {lat: 51.501, lng:-0.06},
-//     {lat: 51.490, lng: -0.06},
-//     {lat: 51.490, lng: -0.02},
-//     {lat: 51.501, lng: -0.02}
-//     ];
-// var polygon1 = L.polygon(latlngs, {color: '#3388FF'}).addTo(mymap);
-// polygon1.enableEdit();
 
-// [
-//     {lat: 51.501, lng:-0.06},
-//     {lat: 51.490, lng: -0.06},
-//     {lat: 51.490, lng: -0.02},
-//     {lat: 51.501, lng: -0.02}
-// ];
 var polygon1 = L.polygon( [
     {lat: 51.501, lng:-0.06},
     {lat: 51.490, lng: -0.06},
@@ -67,7 +59,11 @@ var polygon1 = L.polygon( [
 ], {color: '#3388FF'}).addTo(mymap);
 polygon1.enableEdit();
 
-
+var polygon1 = L.polyline( [
+    {lat: 51.501, lng:-0.06},
+    {lat: 51.504, lng:-0.066},
+], {color: 'green'}).addTo(mymap);
+polygon1.enableEdit();
 
 var latlngs2 = [
     [-54.826156, 291.65431],
@@ -134,14 +130,15 @@ function goToPoligonFive() {
     document.getElementById('selected').innerHTML = selected;
 }
 
-polyLatLngs = [];
-// var dPoly = L.polygon(polyLatLngs, {color: 'green'}).addTo(mymap);
-// dPoly.enableEdit();
-
 function showFunc() {
-    var i =  document.getElementById('dPoly').value;
-    polyLatLngs.push(i);
-    JSON.parse(polyLatLngs[0]);
-   var dPoly = L.polygon(polyLatLngs, {color: 'green'}).addTo(mymap);
-    dPoly.enableEdit();
+    const latLngsString =  document.getElementById('dPoly').value;
+    const object = JSON.parse(latLngsString);
+    polygons.push(L.polygon(object, {color: 'green'}).addTo(mymap));
+}
+function removePolygon() {
+    if (polygons.length == 0) {
+        return;
+    }
+    mymap.removeLayer(polygons[ polygons.length - 1 ]);
+    polygons = polygons.slice(0, polygons.length - 1);
 }
