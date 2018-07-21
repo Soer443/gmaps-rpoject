@@ -1,6 +1,8 @@
 var selected = '';
 var mymap = L.map('mapid', {editable:true}).setView([51.505, -0.09], 13);
 var polygons = [];
+var arr = [];
+
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -52,25 +54,27 @@ mymap.on('draw:deleted', function () {
 
 
 var polygon1 = L.polygon( [
-    {lat: 51.501, lng:-0.06},
-    {lat: 51.490, lng: -0.06},
-    {lat: 51.490, lng: -0.02},
-    {lat: 51.501, lng: -0.02}
+    [51.50311291428311, -0.08488655090332031],
+    [51.503099557478556, -0.08403897285461426],
+    [51.50264542379517, -0.08451104164123535],
+    [51.502632066853636, -0.08403897285461426],
+    [51.50209110743074, -0.0850045680999756],
+    [51.502538568153156, -0.0848972797393799],
+    [51.502545246638114, -0.08531570434570314]
 ], {color: '#3388FF'}).addTo(mymap);
 polygon1.enableEdit();
 
-var polygon1 = L.polyline( [
-    {lat: 51.501, lng:-0.06},
-    {lat: 51.504, lng:-0.066},
-], {color: 'green'}).addTo(mymap);
-polygon1.enableEdit();
-
 var latlngs2 = [
-    [-54.826156, 291.65431],
-    [-54.828678, 291.654782],
-    [-54.829073, 291.660404],
-    [-54.828085, 291.660748],
-    [-54.826972, 291.659675],
+    [-54.8293576735939, 291.66370332241064],
+    [-54.82957706139659, 291.66370332241064],
+    [-54.829688299827, 291.66382133960724],
+    [-54.8299015059619, 291.66384816169744],
+    [-54.82990768583309, 291.6651034355164],
+    [-54.82975936866374, 291.66534483432775],
+    [-54.82976245861032, 291.66504442691803],
+    [-54.829527621995815, 291.6650229692459],
+    [-54.829527621995815, 291.66532874107367],
+    [-54.8293576735939, 291.6649425029755],
 ];
 var polygon2 = L.polygon(latlngs2, {color: '#3388FF'}).addTo(mymap);
 polygon2.enableEdit();
@@ -87,19 +91,28 @@ var polygon3 = L.polygon(latlngs3, {color: '#3388FF'}).addTo(mymap);
 polygon3.enableEdit();
 
 var latlngs4 = [
-    [-23.588629, -406.585658],
-    [-23.584677, -406.582396],
-    [-23.585385, -406.57907],
-    [-23.589219, -406.583297],
+    [-23.587700168657204, -406.5819078683854],
+    [-23.587867319815672, -406.5822350978852],
+    [-23.588108213757735, -406.58224582672125],
+    [-23.588314693927526, -406.5819776058198],
+    [-23.588309777736775, -406.58110857009893],
+    [-23.588073800364523, -406.58144652843487],
+    [-23.588201621493837, -406.5814304351807],
+    [-23.588118046154147, -406.5816020965577],
+    [-23.5879705601307, -406.5816074609757],
+    [-23.587891900850426, -406.5814626216889],
+    [-23.587995141146127, -406.58129096031195],
+    [-23.587862403608167, -406.580936908722],
+    [-23.587670671371843, -406.58091545104986],
 ];
 var polygon4 = L.polygon(latlngs4, {color: '#3388FF'}).addTo(mymap);
 polygon4.enableEdit();
 
 var latlngs5 = [
-    [0.000750, -78.452833],
-    [-0.00300, -78.452833],
-    [-0.00300, -78.449421],
-    [0.000987, -78.449593],
+    [0.001212358474640014, -78.45240354537965],
+    [-0.0006973743438514514, -78.45236063003541],
+    [-0.0008153915404957979, -78.45140576362611],
+    [0.0011265277861922164, -78.45125555992128],
 ];
 var polygon5 = L.polygon(latlngs5, {color: '#3388FF'}).addTo(mymap);
 polygon5.enableEdit();
@@ -141,4 +154,23 @@ function removePolygon() {
     }
     mymap.removeLayer(polygons[ polygons.length - 1 ]);
     polygons = polygons.slice(0, polygons.length - 1);
+}
+
+
+function getSecondPoint() {
+    const latLngsString =  document.getElementById('dPoly').value;
+    const object = JSON.parse(latLngsString);
+    console.log(object);
+    const c =  {radius: 0.005};
+    const lat = object.lat;
+    const lng = object.lng;
+    const h = (object.heading * 3.1416) / 180;
+    const lat1 = lat + c.radius - (c.radius * Math.sin(h));
+    const lng1 = lng + (Math.sin(h) * c.radius);
+    var polyline = [
+        {lat:lat, lng:lng},
+        {lat:lat1, lng:lng1}
+        ];
+    console.log(polyline);
+    var r = L.polyline(polyline, {color: 'red'}).addTo(mymap);
 }
