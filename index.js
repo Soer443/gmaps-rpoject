@@ -37,6 +37,8 @@ mymap.on('draw:created', function (e) {
     var type = e.layerType,
         layer = e.layer;
     console.log(e.layer.getLatLngs());
+    selected = JSON.stringify(polygon2.getLatLngs()[0].map((d) => ({lat: d.lat, lng: d.lng})));
+    document.getElementById('selected').innerHTML = selected;
     if (type === 'marker') {
     }
     drawnItems.addLayer(layer);
